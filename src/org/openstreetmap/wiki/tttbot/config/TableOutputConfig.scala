@@ -28,12 +28,14 @@ import org.openstreetmap.wiki.tttbot.convert.EntryFilter
 
 /** configuration for a single instance of a table */
 class TableOutputConfig (
-	
+    
 	val columnSets : Seq[ColumnSetConfig],
 	
 	val filters : Seq[EntryFilter],
 	
 	val withColumnTitles : Boolean,
+	
+    val lang : Option[String],
 	
 	/** string that will be added after the {| of the wiki table */
 	val tableParams : String
@@ -53,9 +55,11 @@ object TableOutputConfig extends XMLLoader[TableOutputConfig] {
 		}
 		
 		return new TableOutputConfig(
+		    
 			columnSets,
 			(node \ "filter").map(EntryFilter.fromXMLNode),
 			(node \ "@columnTitles").text == "true",
+			None,
 			(node \ "tableParams").text
 		);
 		

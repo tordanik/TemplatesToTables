@@ -35,6 +35,8 @@ class ColumnConfig (
 	val id : String,
 	
 	val label : String,
+	
+	val labelTranslated : Seq[(String, String)],
 		
 	/**
 	 * Determines whether the column is visible in the table.
@@ -81,9 +83,10 @@ class ColumnConfig (
 	/** 
 	 * alternative constructor that provides a default implementation for readData: ColumnConfig.readDataBasic
 	 */
-	def this (name : String, label : String, visible : Boolean, primary : Boolean,
-			sortable : Boolean, values : Seq[String], attributes : Seq[(String,String)]) = 
-				this(name, label, visible, primary, sortable,
+	def this (name : String, label : String, labelTranslated : Seq[(String, String)],
+	    visible : Boolean, primary : Boolean, sortable : Boolean,
+	    values : Seq[String], attributes : Seq[(String,String)]) = 
+				this(name, label, labelTranslated, visible, primary, sortable,
 						values, attributes, ColumnConfig.readDataBasic)
 	
 	override def toString = id
@@ -109,6 +112,7 @@ object ColumnConfig extends XMLLoader[ColumnConfig] {
 			new ColumnConfig (
 				name,
 				if (labelEl.size > 0) labelEl.first.text else name,
+				(node \ "label").map(l => ((l \ "@lang").text, (l \ "@text").text)),
 				(node \ "@visible").text == "true",
 				(node \ "@primary").text == "true",
 				(node \ "@sortable").text == "true",

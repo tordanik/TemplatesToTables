@@ -68,6 +68,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	</col>
 	
 	<col id="screenshot" label="Screenshot" visible="true" primary="false" sortable="false">
+		<label lang="de" text="Bildschirmfoto"/>
 		<attribute key="class" value="unsortable"/>
 		<mapping key="screenshot" from="(.*)" to="[[File:$1|100px]]"/>
 	</col>
@@ -79,12 +80,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	</col>
 	
 	<col id="platforms" label="Platform" visible="true" primary="false" sortable="true">
+		<label lang="de" text="Plattform"/>
 		<mapping key="platform" from="(.*)" to="$1">
 			<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
 		</mapping>
 	</col>
 	
 	<col id="mobile_platforms" label="Platform" visible="true" primary="false" sortable="true">
+		<label lang="de" text="Plattform"/>
 		<mapping key="platform" from="(.*)" to="$1">
 			<postprocessing tool="multivalueFilter" filter="(?:[aA]ndroid|[iI][pP]hone|[wW]im|[wW]in[cC][eE]|[oO]pen[mM]o[kK]o|[mM]aemo|[sS]ymbian|[pP]alm[oO][sS]|[wW]eb[oO][sS]|[bB]lackberry|[fF]alk|J2ME).*" sep=";"/>
 			<postprocessing tool="replace" from="[aA]ndroid" to="Android"/>
@@ -102,6 +105,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<postprocessing tool="replace" from="J2ME" to="Java ME"/>
 			<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
 		</mapping>
+	</col>
+	
+	<col id="language_german" label="German" visible="true" primary="false" sortable="true">
+		<label lang="de" text="Deutsch"/>
+		<mapping key="languages" from=".*[dD][eE].*" to="{{yes}}"/>
+		<mapping key="languages" from=".*" to="{{no}}"/>
+		<mapping to="{{?}}"/>
 	</col>
 	
 	<columns id="desktop_platform_support_cols">
@@ -124,6 +134,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	<columns id="desktop_platform_version_cols">
 		<col id="windows_versions" label="Windows Versions" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Windows-Versionen"/>
 			<mapping key="platform" from="^(.*[wW]in.*)$" to="$1">
 				<postprocessing tool="multivalueFilter" filter="[wW]in.*" sep=";"/>
 				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
@@ -133,6 +144,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="macos_versions" label="Mac Versions" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Mac-Versionen"/>
 			<mapping key="platform" from="^(.*[mM]ac[oO]s.*)$" to="$1">
 				<postprocessing tool="multivalueFilter" filter="[mM]ac[oO]s.*" sep=";"/>
 				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
@@ -142,6 +154,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="linux_versions" label="Linux Versions" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Linux-Versionen"/>
 			<mapping key="platform" from="^(.*[lL]inux.*)$" to="$1">
 				<postprocessing tool="multivalueFilter" filter="[lL]inux.*" sep=";"/>
 				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
@@ -191,6 +204,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	</columns>
 	
 	<col id="android_versions" label="Android Versions" visible="true" primary="false" sortable="true">
+		<label lang="de" text="Android-Versionen"/>
 		<mapping key="platform" from="^(.*[aA]ndroid.*)$" to="$1">
 			<postprocessing tool="multivalueFilter" filter="[aA]ndroid.*" sep=";"/>
 			<postprocessing tool="replace" from="[aA]ndroid(.*)(?:;|$)" to="; $1"/>
@@ -203,21 +217,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	<columns id="base_cols">
 		<col id="map" label="Display map" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Karte anzeigen"/>
 			<mapping key="map" from="yes" to="{{yes}}"/>
 			<mapping key="map" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="navigating" label="Navigate" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Navigieren"/>
 			<mapping key="navigating" from="yes" to="{{yes}}"/>
 			<mapping key="navigating" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="tracking" label="Make track" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Track aufzeichnen"/>
 			<mapping key="tracking" from="yes" to="{{yes}}"/>
 			<mapping key="tracking" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="monitoring" label="Monitor" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Monitoring"/>
 			<mapping key="monitoring" from="yes" to="{{yes}}"/>
 			<mapping key="monitoring" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
@@ -230,12 +248,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</col>
 		-->		
 		<col id="license" label="License" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Lizenz"/>
 			<mapping key="license" from="((?:.*GPL.*|Apache.*|.*BSD.*|PD|WTFPL|Ms-PL.*))" to="{{free|$1}}"/>
 			<mapping key="license" from="free" to="{{nonfree}}proprietary"/>
 			<mapping key="license" from="(.+)" to="{{nonfree}}$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="price" label="Price" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Preis"/>
 			<!-- free (beer) software -->
 			<mapping key="price" from="free" to="{{free|}}{{sort|0|free}}"/>
 			<!-- different mappings depending on number of digits (for sorting purposes) -->
@@ -258,6 +278,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="languages" label="Languages" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Sprachen"/>
 			<mapping key="languages" from="^(.+)$" to="$1">
 				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
 			</mapping>
@@ -265,12 +286,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</col>
 		<col id="versionAndDate" label="Version" visible="true" primary="false" sortable="true">
 			<mapping key="version" from="(.*)" to="{{yes|$2&lt;br/&gt;$1}}">
-				<and key="date" from="(2010-..-..)"/>
+				<and key="date" from="(2012-..-..)"/>
 			</mapping>
 			<mapping key="version" from="(.*)" to="{{yes|$2&lt;br/&gt;$1}}">
 				<and key="date" from="(2011-..-..)"/>
 			</mapping>
-			<mapping key="date" from="(2010-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
+			<mapping key="date" from="(2012-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
 			<mapping key="date" from="(2011-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
 			<mapping key="version" from="(.*)" to="{{no|$2&lt;br/&gt;$1}}">
 				<and key="date" from="(....-..-..)"/>
@@ -280,13 +301,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping to="{{sort|0000-00-00|{{?}}}}"/>
 		</col>
 		<col id="description" label="Description" visible="true" primary="false" sortable="false">
+			<label lang="de" text="Beschreibung"/>
 			<attribute key="class" value="unsortable"/>
 			<attribute key="width" value="25%"/>
 		</col>
 	</columns>
 	
 	<columns id="development_cols">
-		<col id="author" label="Creator" visible="true" primary="false" sortable="true"/>
+		<col id="author" label="Creator" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Autor"/>
+		</col>
 		<col id="svn" label="SVN" visible="true" primary="false" sortable="false">
 			<mapping key="svn" from="(.*)" to="[$1]"/>
 		</col>
@@ -306,33 +330,39 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	<columns id="map_cols">	
 		<col id="vectormap" label="Shows map as vector" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Vektorkarte"/>
 			<mapping key="mapData" from=".*vector.*" to="{{yes}}"/>
 			<mapping key="mapData" from=".*" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="rastermap" label="Shows map as bitmap" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Bitmapkarte"/>
 			<mapping key="mapData" from=".*raster.*" to="{{yes}}"/>
 			<mapping key="mapData" from=".*" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="datasource_offline" label="Stores map-data on-board" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Speichert Kartendaten on-board"/>
 			<mapping key="datasource" from=".*offline.*" to="{{yes}}"/>
 			<mapping key="datasource" from=".*cache.*" to="{{yes}} (cache)"/>
 			<mapping key="datasource" from=".*" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="datasource_online" label="Stores map-data off-board &lt;small&gt;(downloads from internet)&lt;/small&gt;" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Holt Kartendaten aus dem Internet"/>
 			<mapping key="datasource" from=".*online.*" to="{{yes}}"/>
 			<mapping key="datasource" from=".*caches.*" to="{{yes|yes, caches data}}"/>
 			<mapping key="datasource" from=".*" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="rotateMap" label="Rotate map" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Karte drehen"/>
 			<mapping key="rotateMap" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="rotateMap" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="3D" label="3D view" visible="true" primary="false" sortable="true">
+			<label lang="de" text="3D-Ansicht"/>
 			<mapping key="3D" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="3D" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
@@ -341,55 +371,65 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	<columns id="navigating_cols">
 		<col id="navToPoint" label="Navigate to point" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Navigiere zu einem Punkt"/>
 			<mapping key="navToPoint" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="navToPoint" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="findLocation" label="Find location" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Finde eine Position"/>
 			<mapping key="findLocation" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="findLocation" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="findNearbyPOI" label="Find nearby POIs" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Finde POI in der Nähe"/>
 			<mapping key="findNearbyPOI" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="findNearbyPOI" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="navigateRoute_predef" label="Navigate along predefined route" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Folge einer vordefinierten Route"/>
 			<mapping key="navigateRoute" from=".*predef.*" to="{{yes}}"/>
 			<mapping key="navigateRoute" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="navigateRoute_calc" label="Navigate along calculated route" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Folge einer berechneten Route"/>
 			<mapping key="navigateRoute" from=".*calc.*" to="{{yes}}"/>
 			<mapping key="navigateRoute" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="profile_car" label="Car routing" visible="true" primary="false" sortable="true">
+			<label lang="de" text="PKW-Routing"/>
 			<mapping key="profiles" from=".*car.*" to="{{yes}}"/>
 			<mapping key="profiles" from=".+" to="{{no}}"/>
 			<mapping key="navigateRoute" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="profile_bike" label="Bike routing" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Fahrradrouting"/>
 			<mapping key="profiles" from=".*bike.*" to="{{yes}}"/>
 			<mapping key="profiles" from=".+" to="{{no}}"/>
 			<mapping key="navigateRoute" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="profile_foot" label="Foot routing" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Fußgängerrouting"/>
 			<mapping key="profiles" from=".*foot.*" to="{{yes}}"/>
 			<mapping key="profiles" from=".+" to="{{no}}"/>
 			<mapping key="navigateRoute" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="turnRestrictions" label="Turn restrictions" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Abbiegebeschränkungen"/>
 			<mapping key="turnRestrictions" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="turnRestrictions" from="(.*)" to="$1"/>
 			<mapping key="navigateRoute" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="voice" label="Navigation with voice" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Navigation mit Sprachansage"/>
 			<mapping key="voice" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="voice" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
@@ -400,6 +440,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="withoutGPS" label="Works without GPS" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Funktioniert ohne GPS"/>
 			<mapping key="withoutGPS" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="withoutGPS" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
@@ -408,46 +449,55 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	<columns id="tracking_cols">
 		<col id="customInterval" label="Customizable log interval" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Einstellbares Aufzeichnungsintervall"/>
 			<mapping key="customInterval" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="customInterval" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="format_gpx" label="GPX format" visible="true" primary="false" sortable="true">
+			<label lang="de" text="GPX-Format"/>
 			<mapping key="formats" from=".*gpx.*" to="{{yes}}"/>
 			<mapping key="formats" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="format_kml" label="KML format" visible="true" primary="false" sortable="true">
+			<label lang="de" text="KML-Format"/>
 			<mapping key="formats" from=".*kml.*" to="{{yes}}"/>
 			<mapping key="formats" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="format_nmea" label="NMEA format" visible="true" primary="false" sortable="true">
+			<label lang="de" text="NMEA-Format"/>
 			<mapping key="formats" from=".*nmea.*" to="{{yes}}"/>
 			<mapping key="formats" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<!-- TODO: Other formats instead of All formats -->
 		<col id="formats" label="All formats" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Alle Formate"/>
 			<mapping key="formats" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="geotagging_note" label="Geo-tagged notes" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Notizen mit Geotag"/>
 			<mapping key="geotagging" from=".*note.*" to="{{yes}}"/>
 			<mapping key="geotagging" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="geotagging_photo" label="Geo-tagged photos " visible="true" primary="false" sortable="true">
+			<label lang="de" text="Fotos mit Geotag"/>
 			<mapping key="geotagging" from=".*photo.*" to="{{yes}}"/>
 			<mapping key="geotagging" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="geotagging_audio" label="Geo-tagged audio" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Audio mit Geotag"/>
 			<mapping key="geotagging" from=".*audio.*" to="{{yes}}"/>
 			<mapping key="geotagging" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="fastWayPointAdding" label="Fast POI buttons" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Knöpfe zum schnellen Setzen von Wegpunkten"/>
 			<mapping key="fastWayPointAdding" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="fastWayPointAdding" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
@@ -457,41 +507,49 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	<columns id="monitoring_cols">
 		<col id="showTrack" label="Show current track" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Zeige aktuellen Track"/>
 			<mapping key="showTrack" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="showTrack" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="showExistingTrack" label="Open existing track" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Öffne existierenden Track"/>
 			<mapping key="showExistingTrack" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="showExistingTrack" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="showAltitudeDiagram" label="Altitude diagram" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Höhendiagramm"/>
 			<mapping key="showAltitudeDiagram" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="showAltitudeDiagram" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="showDOP" label="Show DOP value" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Zeige DOP-Wert"/>
 			<mapping key="showDOP" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="showDOP" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="showSatellites" label="Satellite view" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Zeige Satelliten"/>
 			<mapping key="showSatellites" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="showSatelites" from="(yes|no)" to="{{$1}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="showNMEAlive" label="Show live NMEA data" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Zeige NMEA-Livedaten"/>
 			<mapping key="showNMEAlive" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="showNMEAlive" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="sendPosition_sms" label="Send current position via SMS" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Sende aktuelle Position via SMS"/>
 			<mapping key="sendPosition" from=".*sms.*" to="{{yes}}"/>
 			<mapping key="sendPosition" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="sendPosition_www" label="Upload current position" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Lade aktuelle Position ins WWW hoch"/>
 			<mapping key="sendPosition" from=".*www.*" to="{{yes}}"/>
 			<mapping key="sendPosition" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
@@ -500,36 +558,43 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 	<columns id="accessibility_cols">
 		<col id="accessibility_blind" label="Targeted at blind users" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Für blinde Nutzer gedacht"/>
 			<mapping key="accessibility" from=".*blind.*" to="{{yes}}"/>
 			<mapping key="accessibility" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="accessibility_wheelchair" label="Targeted at wheelchair users" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Für Rollstuhlfahrer gedacht"/>
 			<mapping key="accessibility" from=".*wheelchair.*" to="{{yes}}"/>
 			<mapping key="accessibility" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="textOnlyUI" label="Complete non graphics text output" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Komplett ohne Grafik bedienbar"/>
 			<mapping key="textOnlyUI" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="textOnlyUI" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="brailleUI" label="Braille interface" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Braille-Oberfläche"/>
 			<mapping key="brailleUI" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="brailleUI" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="explorerMode" label="Exploration modus &lt;small&gt;(tell all objects approaching)&lt;/small&gt;" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Erkundungsmodus"/>
 			<mapping key="explorerMode" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="explorerMode" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="dangerWarnings" label="Danger Warnings" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Gefahrenwarnungen"/>
 			<mapping key="dangerWarnings" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="dangerWarnings" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="publicTransportMode" label="Public Transport mode" visible="true" primary="false" sortable="true">
+			<label lang="de" text="ÖPNV-Modus"/>
 			<mapping key="publicTransportMode" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="publicTransportMode" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
@@ -539,6 +604,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="screenReaderLanguages" label="Screenreader languages" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Screenreader-Sprachen"/>
 			<mapping key="screenReaderLang" from="^(.+)$" to="$1">
 				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
 			</mapping>
@@ -548,33 +614,39 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 	<columns id="editing_cols">
 		<col id="addPOI" label="Add POIs" visible="true" primary="false" sortable="true">
+			<label lang="de" text="POI hinzufügen"/>
 			<mapping key="addPOI" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="addPOI" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="editPOI" label="Edit / Delete POIs" visible="true" primary="false" sortable="true">
+			<label lang="de" text="POI bearbeiten/löschen"/>
 			<mapping key="editPOI" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="editPOI" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="editTags" label="Edit arbitrary tags of existing OSM objects" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Beliebige Tags an vorhandenen OSM-Objekten bearbeiten"/>
 			<mapping key="editTags" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="editTags" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<!-- TODO "Create ways" -->
 		<col id="editGeom" label="Edit geometries" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Geometrie bearbeiten"/>
 			<mapping key="editGeom" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="editGeom" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="editRelations" label="Edit relations" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Relationen bearbeiten"/>
 			<mapping key="editRelations" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="editRelations" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<!-- TODO "Create osm files &lt;small&gt;(for offline editing)&lt;/small&gt;" -->
 		<col id="uploadOSMData" label="Upload to OSM" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Zu OSM hochladen"/>
 			<mapping key="uploadOSMData" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="uploadOSMData" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
@@ -593,6 +665,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<col idref="genres"/>
 			<col idref="platforms"/>
 			<col idref="mobile_platforms"/>
+			<col idref="language_german"/>
 			<columns idref="desktop_platform_support_cols"/>
 			<columns idref="desktop_platform_version_cols"/>
 			<columns idref="mobile_platform_support_cols"/>

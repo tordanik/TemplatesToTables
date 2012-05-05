@@ -82,10 +82,14 @@ class WikiHookWriter (
 							p._2.replaceAll("/", "|")) //allow to use slash instead of pipe
 			}
 			
+			val langParam = params.find(_._1 == "lang");
+			val lang = if (langParam != None) Some(langParam.get._2) else None;
+			
 			val tableConfig = new TableOutputConfig(
 					Seq(new ColumnSetConfig(None, columns)),
 					filters,
 					withColumnTitles,
+					lang,
 					tableParams)
 			
 			return new WikiTableWriter(tableConfig).write(data)

@@ -55,7 +55,7 @@ class WikiTableWriter (
 			for (a <- column.attributes) {
 				s += a._1 + "=\"" + a._2 + "\" "
 			}
-			s += "| " + column.label + "\n"
+			s += "| " + localizeLabel(column) + "\n"
 		}
 				
 		for (line <- tableData.getLines()) {
@@ -64,7 +64,7 @@ class WikiTableWriter (
 				 cellOpt = line.values.get(column)) {
 				s += "| "
 				if (config.withColumnTitles) {
-					s += "title=\"" + column.label + "\" "
+					s += "title=\"" + localizeLabel(column) + "\" "
 					if (cellOpt == None ||
 							!(cellOpt.get.text.startsWith("{{yes")
 								|| cellOpt.get.text.startsWith("{{no")
@@ -84,6 +84,17 @@ class WikiTableWriter (
 		s += "|}"
 		
 		return s
+		
+	}
+	
+	private def localizeLabel(column : ColumnConfig) : String = {
+	  
+		if (config.lang != None && 
+		    column.labelTranslated.exists(_._1 == config.lang.get)) {
+			return column.labelTranslated.find(_._1 == config.lang.get).get._2
+		} else {
+			return column.label		  
+		}
 		
 	}
 	
