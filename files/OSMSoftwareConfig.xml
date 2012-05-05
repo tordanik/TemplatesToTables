@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
 <!-- 
-Copyright (c) 2010, Tobias Knerr
+Copyright (c) 2010-2011, Tobias Knerr
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -45,12 +45,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	</col>
 	
 	<col id="nameAndWeb" label="Name" visible="true" primary="false" sortable="true">
+		<mapping key="name" from="(.*)" to="[[$2|$1]] [https://$3]">
+			<and key="wiki" from="(.*)"/>
+			<and key="web" from="https://(.*)"/>
+		</mapping>
 		<mapping key="name" from="(.*)" to="[[$2|$1]] [http://$3]">
 			<and key="wiki" from="(.*)"/>
 			<and key="web" from="(?:http://)?(.*)"/>
 		</mapping>
 		<mapping key="name" from="(.*)" to="[[$2|$1]]">
 			<and key="wiki" from="(.*)"/>
+		</mapping>
+		<mapping key="name" from="(.*)" to="$1 [https://$2]">
+			<and key="web" from="https://(.*)"/>
 		</mapping>
 		<mapping key="name" from="(.*)" to="$1 [http://$2]">
 			<and key="web" from="(?:http://)?(.*)"/>
@@ -221,7 +228,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</col>
 		-->		
 		<col id="license" label="License" visible="true" primary="false" sortable="true">
-			<mapping key="license" from="((?:.*GPL.*|Apache.*|.*BSD.*|PD|Ms-PL.*))" to="{{free|$1}}"/>
+			<mapping key="license" from="((?:.*GPL.*|Apache.*|.*BSD.*|PD|WTFPL|Ms-PL.*))" to="{{free|$1}}"/>
 			<mapping key="license" from="free" to="{{nonfree}}proprietary"/>
 			<mapping key="license" from="(.+)" to="{{nonfree}}$1"/>
 			<mapping to="{{?}}"/>
@@ -258,7 +265,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping key="version" from="(.*)" to="{{yes|$2&lt;br/&gt;$1}}">
 				<and key="date" from="(2010-..-..)"/>
 			</mapping>
+			<mapping key="version" from="(.*)" to="{{yes|$2&lt;br/&gt;$1}}">
+				<and key="date" from="(2011-..-..)"/>
+			</mapping>
 			<mapping key="date" from="(2010-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
+			<mapping key="date" from="(2011-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
 			<mapping key="version" from="(.*)" to="{{no|$2&lt;br/&gt;$1}}">
 				<and key="date" from="(....-..-..)"/>
 			</mapping>
@@ -376,17 +387,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping key="navigateRoute" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
-		<col id="voice" label="Onboard search and routing" visible="true" primary="false" sortable="true">
+		<col id="voice" label="Navigation with voice" visible="true" primary="false" sortable="true">
 			<mapping key="voice" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="voice" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
-		<col id="keepOnRoad" label="Navigation with voice" visible="true" primary="false" sortable="true">
+		<col id="keepOnRoad" label="Keep on road" visible="true" primary="false" sortable="true">
 			<mapping key="keepOnRoad" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="keepOnRoad" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
-		<col id="withoutGPS" label="Keep on road" visible="true" primary="false" sortable="true">
+		<col id="withoutGPS" label="Works without GPS" visible="true" primary="false" sortable="true">
 			<mapping key="withoutGPS" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="withoutGPS" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>

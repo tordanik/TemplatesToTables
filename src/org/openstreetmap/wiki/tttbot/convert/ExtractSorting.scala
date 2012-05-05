@@ -33,9 +33,15 @@ class ExtractSorting (
 	
 ) {
 
-	def sort(entries : Seq[ExtractedEntry]) : Seq[ExtractedEntry] = {
-		entries.sortBy(_.data.get(key).get.toLowerCase)
+	def sort(entries : Seq[ExtractedEntry]) : Seq[ExtractedEntry] = {		
+		entries.sortBy(entrySortKey)
 	}
+	
+	private def entrySortKey (entry : ExtractedEntry) : String = 
+		entry.data.get(key) match {
+			case Some(s) => s.toLowerCase
+			case None => "" 
+		}
 	
 }
 
