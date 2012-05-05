@@ -35,6 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<extract>
 		<template name="Template:Software2"/>
 		<sorting key="name"/>
+		<sorting key="wiki"/>
+		<sorting key="description"/>
 	</extract>
 	
 	<col id="name" label="Name" visible="true" primary="false" sortable="true">
@@ -109,7 +111,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="macos_support" label="Mac" visible="true" primary="false" sortable="true">
-			<mapping key="platform" from=".*(?:[mM]ac[oO]s).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*(?:[mM]ac(?:[oO]s))?.*" to="{{yes}}"/>
 			<mapping key="platform" from=".*" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>

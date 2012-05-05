@@ -79,10 +79,11 @@ object ExtractedData {
 	
 	def fromXMLNode (node : xml.Node, root : xml.Node) : ExtractedData = {
 		
-		val sorting = (node \ "sorting") match {
-			case Seq(n) => Some(ExtractSorting.fromXMLNode(n, root))
-			case _      => None
-		}	
+		val sorting = if (!(node \ "sorting").isEmpty) {
+			Some(ExtractSorting.fromXMLNode(node, root))
+		} else {
+			None
+		}			
 		
 		return new ExtractedData(
 			(node \ "template").map(n => TemplateStructure.fromXMLNode(n, root)),

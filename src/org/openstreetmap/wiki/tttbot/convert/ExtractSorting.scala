@@ -29,15 +29,18 @@ import org.openstreetmap.wiki.tttbot.config.XMLLoader
 /** sorting for ExtractedData */
 class ExtractSorting (
 	
-	val key : String
+	val keys : Seq[String]
 	
 ) {
 
-	def sort(entries : Seq[ExtractedEntry]) : Seq[ExtractedEntry] = {		
-		entries.sortBy(entrySortKey)
+	def sort(entries : Seq[ExtractedEntry]) : Seq[ExtractedEntry] = {
+		var result = entries
+		for (key <- keys.reverse)
+			result = result.sortBy(entrySortKey(key))
+		return result
 	}
 	
-	private def entrySortKey (entry : ExtractedEntry) : String = 
+	private def entrySortKey (key : String) (entry : ExtractedEntry) : String = 
 		entry.data.get(key) match {
 			case Some(s) => s.toLowerCase
 			case None => "" 
@@ -50,7 +53,8 @@ object ExtractSorting extends XMLLoader[ExtractSorting] {
 	override protected def fromXMLNode_internal (node : xml.Node, root : xml.Node)
 	: ExtractSorting = {
 			
-		return new ExtractSorting((node \ "@key").text)
+		return new ExtractSorting(
+				for (sorting <- node \ "sorting") yield (sorting \ "@key").text)
 		
 	}
 	
