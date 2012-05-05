@@ -1,0 +1,623 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- 
+Copyright (c) 2010, Tobias Knerr
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<!--
+ This is a configuration file for the TemplateToTables software.
+ It represents the behavior of TTTBot, a robot on wiki.openstreetmap.org.
+-->
+
+<tttconfig wikiURL="http://wiki.openstreetmap.org/w/" wikiUser="TTTBot">
+
+	<!-- templates to evaluate -->
+	<extract>
+		<template name="Template:Software2"/>
+		<sorting key="name"/>
+	</extract>
+	
+	<col id="name" label="Name" visible="true" primary="false" sortable="true">
+		<mapping key="name" from="(.*)" to="[[$2|$1]]">
+			<and key="wiki" from="(.*)"/>
+		</mapping>
+		<mapping key="name" from="(.*)" to="$1"/>
+	</col>
+	
+	<col id="nameAndWeb" label="Name" visible="true" primary="false" sortable="true">
+		<mapping key="name" from="(.*)" to="[[$2|$1]] [http://$3]">
+			<and key="wiki" from="(.*)"/>
+			<and key="web" from="(?:http://)?(.*)"/>
+		</mapping>
+		<mapping key="name" from="(.*)" to="[[$2|$1]]">
+			<and key="wiki" from="(.*)"/>
+		</mapping>
+		<mapping key="name" from="(.*)" to="$1 [http://$2]">
+			<and key="web" from="(?:http://)?(.*)"/>
+		</mapping>
+		<mapping key="name" from="(.*)" to="$1"/>
+	</col>
+	
+	<col id="screenshot" label="Screenshot" visible="true" primary="false" sortable="false">
+		<attribute key="class" value="unsortable"/>
+		<mapping key="screenshot" from="(.*)" to="[[File:$1|100px]]"/>
+	</col>
+	
+	<col id="genres" label="Genre" visible="true" primary="false" sortable="true">
+		<mapping key="genre" from="(.*)" to="$1">
+			<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
+		</mapping>
+	</col>
+	
+	<col id="platforms" label="Platform" visible="true" primary="false" sortable="true">
+		<mapping key="platform" from="(.*)" to="$1">
+			<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
+		</mapping>
+	</col>
+	
+	<col id="mobile_platforms" label="Platform" visible="true" primary="false" sortable="true">
+		<mapping key="platform" from="(.*)" to="$1">
+			<postprocessing tool="multivalueFilter" filter="(?:[aA]ndroid|[iI][pP]hone|[wW]im|[wW]in[cC][eE]|[oO]pen[mM]o[kK]o|[mM]aemo|[sS]ymbian|[pP]alm[oO][sS]|[wW]eb[oO][sS]|[bB]lackberry|[fF]alk|J2ME).*" sep=";"/>
+			<postprocessing tool="replace" from="[aA]ndroid" to="Android"/>
+			<postprocessing tool="replace" from="[iI][pP]hone" to="iPhone"/>
+			<postprocessing tool="replace" from="[iI][oO][sS]" to="iOS"/>
+			<postprocessing tool="replace" from="[wW]im" to="Windows Mobile"/>
+			<postprocessing tool="replace" from="[wW]in[cC][eE]" to="Windows CE"/>
+			<postprocessing tool="replace" from="[oO]pen[mM]o[kK]o" to="OpenMoko"/>
+			<postprocessing tool="replace" from="[mM]aemo" to="Maemo"/>
+			<postprocessing tool="replace" from="[sS]ymbian" to="Symbian"/>
+			<postprocessing tool="replace" from="[pP]alm[oO][sS]" to="PalmOS"/>
+			<postprocessing tool="replace" from="[wW]eb[oO][sS]" to="WebOS"/>
+			<postprocessing tool="replace" from="[bB]lackberry" to="Blackberry"/>
+			<postprocessing tool="replace" from="[fF]alk" to="Falk"/>
+			<postprocessing tool="replace" from="J2ME" to="Java ME"/>
+			<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
+		</mapping>
+	</col>
+	
+	<columns id="desktop_platform_support_cols">
+		<col id="windows_support" label="Windows" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[wW]in).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="macos_support" label="Mac" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[mM]ac[oO]s).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="linux_support" label="Linux" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[lL]inux).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+	
+	<columns id="desktop_platform_version_cols">
+		<col id="windows_versions" label="Windows Versions" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from="^(.*[wW]in.*)$" to="$1">
+				<postprocessing tool="multivalueFilter" filter="[wW]in.*" sep=";"/>
+				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
+				<postprocessing tool="replace" from="^(.*)$" to="{{yes|$1}}"/>
+			</mapping>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="macos_versions" label="Mac Versions" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from="^(.*[mM]ac[oO]s.*)$" to="$1">
+				<postprocessing tool="multivalueFilter" filter="[mM]ac[oO]s.*" sep=";"/>
+				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
+				<postprocessing tool="replace" from="^(.*)$" to="{{yes|$1}}"/>
+			</mapping>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="linux_versions" label="Linux Versions" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from="^(.*[lL]inux.*)$" to="$1">
+				<postprocessing tool="multivalueFilter" filter="[lL]inux.*" sep=";"/>
+				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
+				<postprocessing tool="replace" from="^(.*)$" to="{{yes|$1}}"/>
+			</mapping>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+	
+	<columns id="mobile_platform_support_cols">
+		<col id="android_support" label="Android" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[aA]ndroid).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="ios_support" label="iOS" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[iI][pP]hone|[iI][oO][sS]).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="winmobile_support" label="Windows Mobile" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[wW]im).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="openmoko_support" label="Openmoko" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[oO]pen[mM]o[kK]o).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="maemo_support" label="Maemo" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[mM]aemo).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="symbian_support" label="Symbian" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[sS]ymbian).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="blackberry_support" label="Blackberry" visible="true" primary="false" sortable="true">
+			<mapping key="platform" from=".*(?:[bB]lackberry).*" to="{{yes}}"/>
+			<mapping key="platform" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+	
+	<col id="android_versions" label="Android Versions" visible="true" primary="false" sortable="true">
+		<mapping key="platform" from="^(.*[aA]ndroid.*)$" to="$1">
+			<postprocessing tool="multivalueFilter" filter="[aA]ndroid.*" sep=";"/>
+			<postprocessing tool="replace" from="[aA]ndroid(.*)(?:;|$)" to="; $1"/>
+			<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
+			<postprocessing tool="replace" from="^(.*)$" to="{{yes|$1}}"/>
+		</mapping>
+		<mapping key="platform" from=".*" to="{{no}}"/>
+		<mapping to="{{?}}"/>
+	</col>
+	
+	<columns id="base_cols">
+		<col id="map" label="Display map" visible="true" primary="false" sortable="true">
+			<mapping key="map" from="yes" to="{{yes}}"/>
+			<mapping key="map" from="no" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="navigating" label="Navigate" visible="true" primary="false" sortable="true">
+			<mapping key="navigating" from="yes" to="{{yes}}"/>
+			<mapping key="navigating" from="no" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="tracking" label="Make track" visible="true" primary="false" sortable="true">
+			<mapping key="tracking" from="yes" to="{{yes}}"/>
+			<mapping key="tracking" from="no" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="monitoring" label="Monitor" visible="true" primary="false" sortable="true">
+			<mapping key="monitoring" from="yes" to="{{yes}}"/>
+			<mapping key="monitoring" from="no" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<!-- TODO: Definition?
+		<col id="routing" label="Routing" visible="true" primary="false" sortable="true">
+			<mapping key="routing" from="yes" to="{{yes}}"/>
+			<mapping key="routing" from="no" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		-->		
+		<col id="license" label="License" visible="true" primary="false" sortable="true">
+			<mapping key="license" from="((?:.*GPL.*|Apache.*|.*BSD.*|PD|Ms-PL.*))" to="{{free|$1}}"/>
+			<mapping key="license" from="free" to="{{nonfree}}proprietary"/>
+			<mapping key="license" from="(.+)" to="{{nonfree}}$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="price" label="Price" visible="true" primary="false" sortable="true">
+			<!-- free (beer) software -->
+			<mapping key="price" from="free" to="{{free|}}{{sort|0|free}}"/>
+			<!-- different mappings depending on number of digits (for sorting purposes) -->
+			<mapping key="price" from="(.+)" to="{{nonfree}}{{sort|$2$3$4$5|$1}}">
+				<and key="price" from="\D*(\d)(\d)(\d)(\d)[\$€].*"/>
+			</mapping>
+			<mapping key="price" from="(.+)" to="{{nonfree}}{{sort|0$2$3$4|$1}}">
+				<and key="price" from="\D*(\d)(\d)(\d)[\$€].*"/>
+			</mapping>
+			<mapping key="price" from="(.+)" to="{{nonfree}}{{sort|00$2$3|$1}}">
+				<and key="price" from="\D*(\d)(\d)[\$€].*"/>
+			</mapping>
+			<mapping key="price" from="(.+)" to="{{nonfree}}{{sort|000$2|$1}}">
+				<and key="price" from="\D*(\d)[\$€].*"/>
+			</mapping>
+			<mapping key="price" from="(.+)" to="{{nonfree}}$1"/>
+			<!-- default to free for software using FOSS licenses and "free beer" license -->
+			<mapping key="license" from="((?:.*GPL.*|Apache.*|.*BSD.*|PD))" to="{{free|}}{{sort|0|free}}"/>
+			<mapping key="license" from="free" to="{{free|}}{{sort|0|free}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="languages" label="Languages" visible="true" primary="false" sortable="true">
+			<mapping key="languages" from="^(.+)$" to="$1">
+				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
+			</mapping>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="versionAndDate" label="Version" visible="true" primary="false" sortable="true">
+			<mapping key="version" from="(.*)" to="{{yes|$2&lt;br/&gt;$1}}">
+				<and key="date" from="(2010-..-..)"/>
+			</mapping>
+			<mapping key="date" from="(2010-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
+			<mapping key="version" from="(.*)" to="{{no|$2&lt;br/&gt;$1}}">
+				<and key="date" from="(....-..-..)"/>
+			</mapping>
+			<mapping key="date" from="(....-..-..)" to="{{no|$1&lt;br/&gt;{{?}}}}"/>
+			<mapping key="version" from="(.*)" to="{{sort|0000-00-00|{{?}}}}&lt;br/&gt;$1"/>>
+			<mapping to="{{sort|0000-00-00|{{?}}}}"/>
+		</col>
+		<col id="description" label="Description" visible="true" primary="false" sortable="false">
+			<attribute key="class" value="unsortable"/>
+			<attribute key="width" value="25%"/>
+		</col>
+	</columns>
+	
+	<columns id="development_cols">
+		<col id="author" label="Creator" visible="true" primary="false" sortable="true"/>
+		<col id="svn" label="SVN" visible="true" primary="false" sortable="false">
+			<mapping key="svn" from="(.*)" to="[$1]"/>
+		</col>
+		<col id="code" label="Code" visible="true" primary="false" sortable="true">
+			<mapping key="code" from="(.*)" to="$1">				
+				<postprocessing tool="replace" from=";\s*" to="; "/>
+			</mapping>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="framework" label="Framework" visible="true" primary="false" sortable="true">
+			<mapping key="framework" from="(.*)" to="$1">				
+				<postprocessing tool="replace" from=";\s*" to="; "/>
+			</mapping>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+	
+	<columns id="map_cols">	
+		<col id="vectormap" label="Shows map as vector" visible="true" primary="false" sortable="true">
+			<mapping key="mapData" from=".*vector.*" to="{{yes}}"/>
+			<mapping key="mapData" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="rastermap" label="Shows map as bitmap" visible="true" primary="false" sortable="true">
+			<mapping key="mapData" from=".*raster.*" to="{{yes}}"/>
+			<mapping key="mapData" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="datasource_offline" label="Stores map-data on-board" visible="true" primary="false" sortable="true">
+			<mapping key="datasource" from=".*offline.*" to="{{yes}}"/>
+			<mapping key="datasource" from=".*cache.*" to="{{yes}} (cache)"/>
+			<mapping key="datasource" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="datasource_online" label="Stores map-data off-board &lt;small&gt;(downloads from internet)&lt;/small&gt;" visible="true" primary="false" sortable="true">
+			<mapping key="datasource" from=".*online.*" to="{{yes}}"/>
+			<mapping key="datasource" from=".*caches.*" to="{{yes|yes, caches data}}"/>
+			<mapping key="datasource" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="rotateMap" label="Rotate map" visible="true" primary="false" sortable="true">
+			<mapping key="rotateMap" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="rotateMap" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="3D" label="3D view" visible="true" primary="false" sortable="true">
+			<mapping key="3D" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="3D" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+	
+	<columns id="navigating_cols">
+		<col id="navToPoint" label="Navigate to point" visible="true" primary="false" sortable="true">
+			<mapping key="navToPoint" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="navToPoint" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="findLocation" label="Find location" visible="true" primary="false" sortable="true">
+			<mapping key="findLocation" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="findLocation" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="findNearbyPOI" label="Find nearby POIs" visible="true" primary="false" sortable="true">
+			<mapping key="findNearbyPOI" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="findNearbyPOI" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="navigateRoute_predef" label="Navigate along predefined route" visible="true" primary="false" sortable="true">
+			<mapping key="navigateRoute" from=".*predef.*" to="{{yes}}"/>
+			<mapping key="navigateRoute" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="navigateRoute_calc" label="Navigate along calculated route" visible="true" primary="false" sortable="true">
+			<mapping key="navigateRoute" from=".*calc.*" to="{{yes}}"/>
+			<mapping key="navigateRoute" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="profile_car" label="Car routing" visible="true" primary="false" sortable="true">
+			<mapping key="profiles" from=".*car.*" to="{{yes}}"/>
+			<mapping key="profiles" from=".+" to="{{no}}"/>
+			<mapping key="navigateRoute" from="no" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="profile_bike" label="Bike routing" visible="true" primary="false" sortable="true">
+			<mapping key="profiles" from=".*bike.*" to="{{yes}}"/>
+			<mapping key="profiles" from=".+" to="{{no}}"/>
+			<mapping key="navigateRoute" from="no" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="profile_foot" label="Foot routing" visible="true" primary="false" sortable="true">
+			<mapping key="profiles" from=".*foot.*" to="{{yes}}"/>
+			<mapping key="profiles" from=".+" to="{{no}}"/>
+			<mapping key="navigateRoute" from="no" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="turnRestrictions" label="Turn restrictions" visible="true" primary="false" sortable="true">
+			<mapping key="turnRestrictions" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="turnRestrictions" from="(.*)" to="$1"/>
+			<mapping key="navigateRoute" from="no" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="voice" label="Onboard search and routing" visible="true" primary="false" sortable="true">
+			<mapping key="voice" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="voice" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="keepOnRoad" label="Navigation with voice" visible="true" primary="false" sortable="true">
+			<mapping key="keepOnRoad" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="keepOnRoad" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="withoutGPS" label="Keep on road" visible="true" primary="false" sortable="true">
+			<mapping key="withoutGPS" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="withoutGPS" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+	
+	<columns id="tracking_cols">
+		<col id="customInterval" label="Customizable log interval" visible="true" primary="false" sortable="true">
+			<mapping key="customInterval" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="customInterval" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="format_gpx" label="GPX format" visible="true" primary="false" sortable="true">
+			<mapping key="formats" from=".*gpx.*" to="{{yes}}"/>
+			<mapping key="formats" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="format_kml" label="KML format" visible="true" primary="false" sortable="true">
+			<mapping key="formats" from=".*kml.*" to="{{yes}}"/>
+			<mapping key="formats" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="format_nmea" label="NMEA format" visible="true" primary="false" sortable="true">
+			<mapping key="formats" from=".*nmea.*" to="{{yes}}"/>
+			<mapping key="formats" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<!-- TODO: Other formats instead of All formats -->
+		<col id="formats" label="All formats" visible="true" primary="false" sortable="true">
+			<mapping key="formats" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="geotagging_note" label="Geo-tagged notes" visible="true" primary="false" sortable="true">
+			<mapping key="geotagging" from=".*note.*" to="{{yes}}"/>
+			<mapping key="geotagging" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="geotagging_photo" label="Geo-tagged photos " visible="true" primary="false" sortable="true">
+			<mapping key="geotagging" from=".*photo.*" to="{{yes}}"/>
+			<mapping key="geotagging" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="geotagging_audio" label="Geo-tagged audio" visible="true" primary="false" sortable="true">
+			<mapping key="geotagging" from=".*audio.*" to="{{yes}}"/>
+			<mapping key="geotagging" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="fastWayPointAdding" label="Fast POI buttons" visible="true" primary="false" sortable="true">
+			<mapping key="fastWayPointAdding" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="fastWayPointAdding" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<!-- TODO: Upload GPX to OSM -->
+	</columns>
+	
+	<columns id="monitoring_cols">
+		<col id="showTrack" label="Show current track" visible="true" primary="false" sortable="true">
+			<mapping key="showTrack" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="showTrack" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="showExistingTrack" label="Open existing track" visible="true" primary="false" sortable="true">
+			<mapping key="showExistingTrack" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="showExistingTrack" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="showAltitudeDiagram" label="Altitude diagram" visible="true" primary="false" sortable="true">
+			<mapping key="showAltitudeDiagram" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="showAltitudeDiagram" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="showDOP" label="Show DOP value" visible="true" primary="false" sortable="true">
+			<mapping key="showDOP" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="showDOP" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="showSatellites" label="Satellite view" visible="true" primary="false" sortable="true">
+			<mapping key="showSatellites" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="showSatelites" from="(yes|no)" to="{{$1}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="showNMEAlive" label="Show live NMEA data" visible="true" primary="false" sortable="true">
+			<mapping key="showNMEAlive" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="showNMEAlive" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="sendPosition_sms" label="Send current position via SMS" visible="true" primary="false" sortable="true">
+			<mapping key="sendPosition" from=".*sms.*" to="{{yes}}"/>
+			<mapping key="sendPosition" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="sendPosition_www" label="Upload current position" visible="true" primary="false" sortable="true">
+			<mapping key="sendPosition" from=".*www.*" to="{{yes}}"/>
+			<mapping key="sendPosition" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+		
+	<columns id="accessibility_cols">
+		<col id="accessibility_blind" label="Targeted at blind users" visible="true" primary="false" sortable="true">
+			<mapping key="accessibility" from=".*blind.*" to="{{yes}}"/>
+			<mapping key="accessibility" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="accessibility_wheelchair" label="Targeted at wheelchair users" visible="true" primary="false" sortable="true">
+			<mapping key="accessibility" from=".*wheelchair.*" to="{{yes}}"/>
+			<mapping key="accessibility" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="textOnlyUI" label="Complete non graphics text output" visible="true" primary="false" sortable="true">
+			<mapping key="textOnlyUI" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="textOnlyUI" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="brailleUI" label="Braille interface" visible="true" primary="false" sortable="true">
+			<mapping key="brailleUI" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="brailleUI" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="explorerMode" label="Exploration modus &lt;small&gt;(tell all objects approaching)&lt;/small&gt;" visible="true" primary="false" sortable="true">
+			<mapping key="explorerMode" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="explorerMode" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="dangerWarnings" label="Danger Warnings" visible="true" primary="false" sortable="true">
+			<mapping key="dangerWarnings" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="dangerWarnings" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="publicTransportMode" label="Public Transport mode" visible="true" primary="false" sortable="true">
+			<mapping key="publicTransportMode" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="publicTransportMode" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="screenReader" label="Screenreader" visible="true" primary="false" sortable="true">
+			<mapping key="screenReader" from="(.+)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="screenReaderLanguages" label="Screenreader languages" visible="true" primary="false" sortable="true">
+			<mapping key="screenReaderLang" from="^(.+)$" to="$1">
+				<postprocessing tool="replace" from=";\s*(\S)" to="; $1"/>
+			</mapping>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+		
+	<columns id="editing_cols">
+		<col id="addPOI" label="Add POIs" visible="true" primary="false" sortable="true">
+			<mapping key="addPOI" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="addPOI" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="editPOI" label="Edit / Delete POIs" visible="true" primary="false" sortable="true">
+			<mapping key="editPOI" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="editPOI" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="editTags" label="Edit arbitrary tags of existing OSM objects" visible="true" primary="false" sortable="true">
+			<mapping key="editTags" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="editTags" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<!-- TODO "Create ways" -->
+		<col id="editGeom" label="Edit geometries" visible="true" primary="false" sortable="true">
+			<mapping key="editGeom" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="editGeom" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="editRelations" label="Edit relations" visible="true" primary="false" sortable="true">
+			<mapping key="editRelations" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="editRelations" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<!-- TODO "Create osm files &lt;small&gt;(for offline editing)&lt;/small&gt;" -->
+		<col id="uploadOSMData" label="Upload to OSM" visible="true" primary="false" sortable="true">
+			<mapping key="uploadOSMData" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="uploadOSMData" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+	
+	<!-- configuration of output targets -->
+	<output>
+	
+		<target type="wikihook" id="software_hook" columnTitles="true">
+			<template name="Template:SoftwareTable"/>
+			<tableParams>class="wikitable sortable" style="font-size: 85%; text-align: center;"</tableParams>
+			<col idref="name"/>
+			<col idref="nameAndWeb"/>
+			<col idref="screenshot"/>
+			<col idref="genres"/>
+			<col idref="platforms"/>
+			<col idref="mobile_platforms"/>
+			<columns idref="desktop_platform_support_cols"/>
+			<columns idref="desktop_platform_version_cols"/>
+			<columns idref="mobile_platform_support_cols"/>
+			<columns idref="android_versions"/>
+			<columns idref="base_cols"/>
+			<columns idref="development_cols"/>
+			<columns idref="map_cols"/>
+			<columns idref="navigating_cols"/>
+			<columns idref="tracking_cols"/>
+			<columns idref="monitoring_cols"/>
+			<columns idref="accessibility_cols"/>
+			<columns idref="editing_cols"/>
+		</target>
+	
+		<target type="wikihookDoc">
+			<template name="Template:SoftwareTableColumnDocumentation"/>
+			<target idref="software_hook"/>
+		</target>
+		
+		<!--
+
+		<target type="wikipage" id="task_table" file="tasktable.txt">
+			<table>
+				<tableParams>class="wikitable sortable" style="font-size: 85%; text-align: center;"</tableParams>
+				<col idref="nameAndWeb"/>
+				<col idref="screenshot"/>
+				<col idref="platforms"/>
+				<col id="task_checked_by_column" label="Checked by" visible="true" primary="false" sortable="true">
+					<mapping to=""/>
+				</col>
+				<col id="task_comment_column" label="Comments" visible="true" primary="false" sortable="true">
+					<mapping to=""/>
+				</col>
+			</table>
+		</target>
+
+		-->
+	
+	</output>
+	
+</tttconfig>
