@@ -447,6 +447,34 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</col>
 	</columns>
 	
+	<columns id="routing_provider_cols">
+		<col id="routing_offline" label="Offline routing" visible="true" primary="false" sortable="true">
+			<mapping key="routingProviders" from=".*(?:offline).*" to="{{yes}}"/>
+			<mapping key="routingProviders" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="routing_provider_CloudMade" label="CloudMade" visible="true" primary="false" sortable="true">
+			<mapping key="routingProviders" from=".*(?:[cC]loud[mM]ade).*" to="{{yes}}"/>
+			<mapping key="routingProviders" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="routing_provider_Yours" label="Yours" visible="true" primary="false" sortable="true">
+			<mapping key="routingProviders" from=".*(?:[yY]ours).*" to="{{yes}}"/>
+			<mapping key="routingProviders" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="routing_provider_MapQuest" label="MapQuest" visible="true" primary="false" sortable="true">
+			<mapping key="routingProviders" from=".*(?:[mM]ap[qQ]uest).*" to="{{yes}}"/>
+			<mapping key="routingProviders" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="routing_provider_OpenRouteService" label="OpenRouteService" visible="true" primary="false" sortable="true">
+			<mapping key="routingProviders" from=".*(?:[oO]pen[rR]oute[sS]ervice).*" to="{{yes}}"/>
+			<mapping key="routingProviders" from=".*" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+	</columns>
+
 	<columns id="tracking_cols">
 		<col id="customInterval" label="Customizable log interval" visible="true" primary="false" sortable="true">
 			<label lang="de" text="Einstellbares Aufzeichnungsintervall"/>
@@ -674,6 +702,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<columns idref="development_cols"/>
 			<columns idref="map_cols"/>
 			<columns idref="navigating_cols"/>
+			<columns idref="routing_provider_cols"/>
 			<columns idref="tracking_cols"/>
 			<columns idref="monitoring_cols"/>
 			<columns idref="accessibility_cols"/>
