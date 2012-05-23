@@ -394,10 +394,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping key="navigateRoute" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
-		<col id="navigateRoute_calc" label="Navigate along calculated route" visible="true" primary="false" sortable="true">
-			<label lang="de" text="Folge einer berechneten Route"/>
-			<mapping key="navigateRoute" from=".*calc.*" to="{{yes}}"/>
-			<mapping key="navigateRoute" from=".+" to="{{no}}"/>
+		<col id="calculateRoute" label="Calculate route" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Route berechnen"/>
+			<mapping key="calculateRoute" from=".*yes.*" to="{{yes}}"/>
+			<mapping key="calculateRoute" from=".+" to="{{no}}"/>
+			<mapping to="{{?}}"/>
+		</col>
+		<col id="calculateRouteOffline" label="Calculate route without internet" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Route berechnen ohne Internet"/>
+			<mapping key="calculateRouteOffline" from=".*yes.*" to="{{yes}}"/>
+			<mapping key="calculateRouteOffline" from=".+" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="profile_car" label="Car routing" visible="true" primary="false" sortable="true">
