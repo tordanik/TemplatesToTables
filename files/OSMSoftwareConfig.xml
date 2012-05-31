@@ -404,6 +404,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<label lang="de" text="Route berechnen ohne Internet"/>
 			<mapping key="calculateRouteOffline" from="(yes|no)" to="{{$1}}"/>
 			<mapping key="calculateRouteOffline" from="(.*)" to="$1"/>
+			<mapping key="calculateRoute" from="no" to="{{no}}"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<col id="profile_car" label="Car routing" visible="true" primary="false" sortable="true">
