@@ -394,6 +394,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping key="predefinedRoute" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
+		<col id="createRouteManually" label="Create route manually" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Route berechnen"/>
+			<mapping key="createRouteManually" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="createRouteManually" from="(.*)" to="$1"/>
+			<mapping to="{{?}}"/>
+		</col>
 		<col id="calculateRoute" label="Calculate route" visible="true" primary="false" sortable="true">
 			<label lang="de" text="Route berechnen"/>
 			<mapping key="calculateRoute" from="(yes|no)" to="{{$1}}"/>
