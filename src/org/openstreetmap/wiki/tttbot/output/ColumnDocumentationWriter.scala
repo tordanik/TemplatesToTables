@@ -91,7 +91,7 @@ object ColumnDocumentationWriter extends XMLLoader[ColumnDocumentationWriter] {
 		: ColumnDocumentationWriter = {
 						
 		return new ColumnDocumentationWriter(
-			(node \ "target").map(n => WikiHookWriter.fromXMLNode(n, root)).first,
+			(node \ "target").map(n => WikiHookWriter.fromXMLNode(n, root)).head,
 			(node \ "template" \ "@name").map(_.text)
 		)
 		

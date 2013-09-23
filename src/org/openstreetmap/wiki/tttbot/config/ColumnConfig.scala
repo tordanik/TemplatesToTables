@@ -111,7 +111,7 @@ object ColumnConfig extends XMLLoader[ColumnConfig] {
 					
 			new ColumnConfig (
 				name,
-				if (labelEl.size > 0) labelEl.first.text else name,
+				if (labelEl.size > 0) labelEl.head.text else name,
 				(node \ "label").map(l => ((l \ "@lang").text, (l \ "@text").text)),
 				(node \ "@visible").text == "true",
 				(node \ "@primary").text == "true",

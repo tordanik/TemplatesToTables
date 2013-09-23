@@ -44,7 +44,7 @@ class FileOutput (
 			
 	override def write(xmlDoc : xml.Node) {
 		
-		xml.XML.saveFull(file.toString, xmlDoc, "UTF-8", true, null)
+		xml.XML.save(file.toString, xmlDoc, "UTF-8", true, null)
 		
 	}
 	

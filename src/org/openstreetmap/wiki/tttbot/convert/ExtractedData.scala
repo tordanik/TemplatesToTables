@@ -73,7 +73,7 @@ object ExtractedData {
 		
 	def fromXMLDocument (root : xml.Node) : ExtractedData = {
 		
-		return fromXMLNode ((root \ "extract").first, root)
+		return fromXMLNode ((root \ "extract").head, root)
 		
 	}
 	
