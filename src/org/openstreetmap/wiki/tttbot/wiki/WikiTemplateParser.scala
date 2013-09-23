@@ -56,7 +56,7 @@ object WikiTemplateParser {
 		//eliminates duplicates //TODO: should not be necessary. Bug in lib or in use of lib?
 		var pageTitleSet = pageTitleBuffer.toSet
 		
-		return pageTitleSet.map(wikiInterface.readContent).toSeq
+		return pageTitleSet.map(wikiInterface.getArticle).toSeq
 		
 	}
 	
