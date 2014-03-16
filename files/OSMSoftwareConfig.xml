@@ -679,10 +679,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			<mapping key="editGeom" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
-		<col id="editRelations" label="Edit relations" visible="true" primary="false" sortable="true">
-			<label lang="de" text="Relationen bearbeiten"/>
-			<mapping key="editRelations" from="(yes|no)" to="{{$1}}"/>
-			<mapping key="editRelations" from="(.*)" to="$1"/>
+		<col id="offsetDBsupport" label="Support imagery offset DB" visible="true" primary="false" sortable="true">
+			<label lang="de" text="Unterstützt Luftbildversatz DB"/>
+			<mapping key="offsetDBsupport" from="(yes|no)" to="{{$1}}"/>
+			<mapping key="offsetDBsupport" from="(.*)" to="$1"/>
 			<mapping to="{{?}}"/>
 		</col>
 		<!-- TODO "Create osm files &lt;small&gt;(for offline editing)&lt;/small&gt;" -->
