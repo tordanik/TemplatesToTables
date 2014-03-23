@@ -286,13 +286,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</col>
 		<col id="versionAndDate" label="Version" visible="true" primary="false" sortable="true">
 			<mapping key="version" from="(.*)" to="{{yes|$2&lt;br/&gt;$1}}">
-				<and key="date" from="(2012-..-..)"/>
+				<and key="date" from="(2014-..-..)"/>
 			</mapping>
 			<mapping key="version" from="(.*)" to="{{yes|$2&lt;br/&gt;$1}}">
-				<and key="date" from="(2011-..-..)"/>
+				<and key="date" from="(2013-..-..)"/>
 			</mapping>
-			<mapping key="date" from="(2012-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
-			<mapping key="date" from="(2011-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
+			<mapping key="date" from="(2014-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
+			<mapping key="date" from="(2013-..-..)" to="{{yes|$1&lt;br/&gt;{{?}}}}"/>
 			<mapping key="version" from="(.*)" to="{{no|$2&lt;br/&gt;$1}}">
 				<and key="date" from="(....-..-..)"/>
 			</mapping>
